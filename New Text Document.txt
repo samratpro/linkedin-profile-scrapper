@@ -1,5 +1,0 @@
-volen : //div[@class='dkVNOjxxSXNkdoMOWbxHHgyFCqyvMQobVUs']
-
-edu : //div[@class='GMmqPvrtIkJGJiEPHZpIXAuqEPVmBekdfU']
-
-exp : //div[@id='experience-section']
