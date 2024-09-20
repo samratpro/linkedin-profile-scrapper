@@ -16,7 +16,7 @@ def scrapper_loop(api_key, profile_id, url, start_page_number, end_page_number, 
         start_page = max(1, min(100, int(start_page_number.strip())))
     except ValueError:
         print('Invalid start Page input..\n\n')
-        log.insert('1.0', 'Invalid start Page input..\n\n')
+        log.insert(END, 'Invalid start Page input..\n\n')
         log.see(END)
         start_page = 1
 
@@ -24,7 +24,7 @@ def scrapper_loop(api_key, profile_id, url, start_page_number, end_page_number, 
         end_page = max(start_page, min(100, int(end_page_number.strip())))
     except ValueError:
         print('Invalid End Page input..\n\n')
-        log.insert('1.0', 'Invalid End Page input..\n\n')
+        log.insert(END, 'Invalid End Page input..\n\n')
         log.see(END)
         end_page = 100
 
@@ -40,7 +40,7 @@ def scrapper_loop(api_key, profile_id, url, start_page_number, end_page_number, 
             page = default_context.pages[0]
 
             print('Running Page Number : ', page_run)
-            log.insert('1.0', f'Running Page Number : {str(page_run)}\n\n')
+            log.insert(END, f'Running Page Number : {str(page_run)}\n\n')
             log.see(END)
             page.goto(url.strip().replace('query=', f'page={str(page_run)}&query='))
             page.wait_for_load_state('load')
@@ -52,7 +52,7 @@ def scrapper_loop(api_key, profile_id, url, start_page_number, end_page_number, 
                     locator.click()
                 except Exception as e:
                     print(f"Error during scrolling: {e}")
-                    log.insert('1.0', f"Error during scrolling: {e}\n")
+                    log.insert(END, f"Error during scrolling: {e}\n")
                     log.see(END)
                 scroll += 3
 
@@ -62,12 +62,13 @@ def scrapper_loop(api_key, profile_id, url, start_page_number, end_page_number, 
 
             browser.close()
             gl.stop()
-            log.insert('1.0', f'No. {str(page_run)}. Page\'s all profile Link has been scrapped\n')
+            log.insert(END, f'No. {str(page_run)}. Page\'s all profile Link has been scrapped\n')
             log.see(END)
             sleep(5)
 
         data_test = 25
         profile_number = 0
+        all_page_scrapped = True
         while profile_number < len(get_profile_list[:data_test]):
 
             gl = GoLogin({"token": api_key, "profile_id": profile_id})
@@ -80,14 +81,14 @@ def scrapper_loop(api_key, profile_id, url, start_page_number, end_page_number, 
 
                 while True:
                     print(profile_number+1)
-                    log.insert('1.0',f'Data No. {str(profile_number+1)}\n')
+                    log.insert(END,f'Data No. {str(profile_number+1)}\n')
                     log.see(END)
                     sales_navi_url = get_profile_list[profile_number]
 
                     try:
                         page.goto(sales_navi_url)
                         page.wait_for_url('https://www.linkedin.com/sales/lead/*')
-                        sleep(3)
+                        sleep(7)
 
                         # Collect profile data
                         full_name = page.locator("(//h1[@class='_headingText_e3b563 _default_1i6ulk _sizeXLarge_e3b563'])[1]").inner_text(timeout=5000) or ''
@@ -208,22 +209,23 @@ def scrapper_loop(api_key, profile_id, url, start_page_number, end_page_number, 
                         education_exprience_4 = edu_4.inner_text().strip().replace('\n','') if edu_4.count() > 0 else ''
 
                         # Volunteer expriment
-                        volunteer_ele = page.locator("//section[@class='JXXObeeEdgbIezcXzWodRoNsVtFolqJMzCcZ _card_yg4u9b _container_iq15dg _lined_1aegh9']//button")
+                        voleenteer_class = "//section[@class='MJYNFcHquGiozqlNSusqqnLmXGfMKEpMkaA _card_yg4u9b _container_iq15dg _lined_1aegh9']"
+                        volunteer_ele = page.locator(f"{voleenteer_class}//button")
                         volunteer_ele.click() if volunteer_ele.count() > 0 else None
 
-                        v_e_1 = page.locator("(//div[@class='SNhUKTOjVnymxNtvKOiguBSekuvumwLHdA']//ul/li)[1]")
+                        v_e_1 = page.locator(f"({voleenteer_class}//ul/li)[1]")
                         Volunteering_1 = v_e_1.inner_text().strip().replace('\n','') if v_e_1.count() > 0 else ''
 
-                        v_e_2 = page.locator("(//div[@class='SNhUKTOjVnymxNtvKOiguBSekuvumwLHdA']//ul/li)[2]")
+                        v_e_2 = page.locator(f"({voleenteer_class}//ul/li)[2]")
                         Volunteering_2 = v_e_2.inner_text().strip().replace('\n','') if v_e_2.count() > 0 else ''
 
-                        v_e_3 = page.locator("(//div[@class='SNhUKTOjVnymxNtvKOiguBSekuvumwLHdA']//ul/li)[3]")
+                        v_e_3 = page.locator(f"({voleenteer_class}//ul/li)[3]")
                         Volunteering_3 = v_e_3.inner_text().strip().replace('\n','') if v_e_3.count() > 0 else ''
 
-                        v_e_4 = page.locator("(//div[@class='SNhUKTOjVnymxNtvKOiguBSekuvumwLHdA']//ul/li)[4]")
+                        v_e_4 = page.locator(f"({voleenteer_class}//ul/li)[4]")
                         Volunteering_4 = v_e_4.inner_text().strip().replace('\n','') if v_e_4.count() > 0 else ''
 
-                        v_e_5 = page.locator("(//div[@class='SNhUKTOjVnymxNtvKOiguBSekuvumwLHdA']//ul/li)[5]")
+                        v_e_5 = page.locator(f"({voleenteer_class}//ul/li)[5]")
                         Volunteering_5 = v_e_5.inner_text().strip().replace('\n','') if v_e_5.count() > 0 else ''
 
                         skills = ''
@@ -351,22 +353,24 @@ def scrapper_loop(api_key, profile_id, url, start_page_number, end_page_number, 
 
                     except Exception as ops:
                         print(f"Error: {ops}")
-                        log.insert('1.0', f"Error: {ops}\n")
+                        log.insert(END, f"Error: {ops}\n")
                         log.see(END)
-                        log.insert('1.0', f"Don't worry! please wait,,browser is opening again...\n")
+                        log.insert(END, f"Don't worry! please wait,,browser is opening again...\n")
                         log.see(END)
                         sleep(5)
+                        all_page_scrapped = False
                         break
                 try:
                     browser.close()
                     gl.stop()
                 except Exception as ops:
-                    log.insert('1.0', f'Browser Close error : {str(ops)}\n')
+                    log.insert(END, f'Browser Close error : {str(ops)}\n')
                     log.see(END)
                 sleep(3)
-                log.insert('1.0', f'No. {str(page_run)}. Page\'s all data has been scrapped\n\n')
+                if(all_page_scrapped==True):
+                    log.insert(END, f'No. {str(page_run)}. Page\'s all data has been scrapped\n\n')
                 log.see(END)
         page_run += 1
     print(f'Done.. All {str(end_page)} Pages Processed..\n\n')
-    log.insert('1.0', f'Done.. All {str(end_page)} Pages Processed..\n\n')
+    log.insert(END, f'Done.. All {str(end_page)} Pages Processed..\n\n')
     log.see(END)
