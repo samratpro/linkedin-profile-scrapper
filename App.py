@@ -45,7 +45,7 @@ window = CTk()
 set_default_color_theme("green")
 set_appearance_mode("light")
 window.title("Linkedin Scrapper")
-window.geometry("600x600")
+window.geometry("620x600")
 window.wm_iconbitmap()
 
 # Create a Frame + Content Frame with scrollbar
@@ -63,13 +63,13 @@ canvas.create_window((0, 0), window=content_frame, anchor=NW)
 
 
 # website info widgets
-cookie_frame = CTkFrame(content_frame)
+cookie_frame = CTkFrame(content_frame, fg_color=('#DBDBDB'))
 cookie_frame.grid(pady=10, padx=20)
 # label section
-open = CTkButton(cookie_frame, text="Open Browser", width=150, fg_color=('#2AA26F'),corner_radius=20, command=lambda: browser_open())
+open = CTkButton(cookie_frame, text="Open Browser", width=150, fg_color=('#006262'),corner_radius=20, command=lambda: browser_open())
 open.grid(row=1, column=0, padx=10, pady=10)
 
-close = CTkButton(cookie_frame, text="Close Browser", width=150, fg_color=('#2AA26F'), corner_radius=20,command=lambda: browser_close())
+close = CTkButton(cookie_frame, text="Close Browser", width=150, fg_color=('#006262'), corner_radius=20,command=lambda: browser_close())
 close.grid(row=1, column=1, padx=10, pady=10)
 
 login_status = CTkLabel(cookie_frame,width=200, text="Login Status : False",corner_radius=20, fg_color=('#9457EB'), text_color=('#E1E8FF'))
@@ -79,7 +79,7 @@ if os.path.exists('storage_state.json'):
             login_status.configure(text='Login Status : True')
 
 # URL Frame
-url_frame = CTkFrame(content_frame)
+url_frame = CTkFrame(content_frame, fg_color=('#DBDBDB'))
 url_frame.grid(pady=10, padx=20)
 
 url_input_labe = CTkLabel(url_frame, text="URL Input")
@@ -89,7 +89,7 @@ url_input.insert('1.0',str(cur.execute('''SELECT url FROM Postdata WHERE ID=1'''
 url_input.grid(row=3, column=0, padx=5, pady=(5, 10))
 
 # Page
-page_frame = CTkFrame(content_frame)
+page_frame = CTkFrame(content_frame, fg_color=('#DBDBDB'))
 page_frame.grid(pady=10, padx=20)
 start_page_labe = CTkLabel(page_frame, text="Start Page ")
 start_page_labe.grid(row=4, column=0, padx=10, pady=3)
@@ -116,18 +116,20 @@ Browser_Status.grid(row=5, column=3, padx=10, pady=10)
 Browser_Status.set("browser show")
 
 # Command
-command_label = CTkFrame(content_frame)
-command_label.grid(row=14, column=0, padx=10, pady=(30, 30))
-start = CTkButton(command_label, text=" ▶ Run", fg_color=('#2AA26F'), corner_radius=20,command=lambda: operation_start())
-start.grid(row=15, column=0, padx=12, pady=10, ipadx=10)
-Update = CTkButton(command_label, text='✔ Save Data', fg_color=("#2AA26F"), corner_radius=20,command=lambda: db_save())
-Update.grid(row=15, column=1, padx=12, pady=10, ipadx=10)
-Reset = CTkButton(command_label, text='↻ Reset Data', fg_color=("#EB4C42"), corner_radius=20,command=lambda: reset_data())
-Reset.grid(row=15, column=2, padx=12, pady=10, ipadx=10)
+command_label = CTkFrame(content_frame, fg_color=('#DBDBDB'))
+command_label.grid(row=14, column=0, padx=5, pady=(30, 30))
+start = CTkButton(command_label, text="▶️ Run", width=120, fg_color=('#006262'), corner_radius=20,command=lambda: operation_start())
+start.grid(row=15, column=0, padx=5, pady=10, ipadx=5)
+stop = CTkButton(command_label, text="⏹️ Stop", width=120, fg_color=('#9457EB'), corner_radius=20,command=lambda: operation_close())
+stop.grid(row=15, column=1, padx=5, pady=10, ipadx=5)
+Update = CTkButton(command_label, text='✔ Save Data', width=120, fg_color=("#006262"), corner_radius=20,command=lambda: db_save())
+Update.grid(row=15, column=2, padx=5, pady=10, ipadx=5)
+Reset = CTkButton(command_label, text='↻ Reset Data', width=120, fg_color=("#9457EB"), corner_radius=20,command=lambda: reset_data())
+Reset.grid(row=15, column=3, padx=5, pady=10, ipadx=5)
 
 
 # Log
-log_label = CTkLabel(content_frame, text="Logs", font=('', 20), fg_color=("red"))
+log_label = CTkLabel(content_frame, text="Logs", font=('', 20), fg_color=("#9457EB"), text_color=('white', 'black'), corner_radius=20,)
 log_label.grid(row=16, column=0, pady=0, ipadx=20)
 log = CTkTextbox(content_frame, fg_color=('black', 'white'), text_color=('white', 'black'), width=550, height=200)
 log.grid(row=17, column=0, padx=5, pady=(5, 10))
@@ -200,14 +202,20 @@ def browser_open():
 def browser_open_thread():
     # Clear the event if the browser is being opened
     browser_close_event.clear()
-    cookie_save(login_status, close_event=browser_close_event)
+    cookie_save(login_status, log, close_event=browser_close_event)
 def browser_close():
     # Set the event to signal the browser should close
     browser_close_event.set()
 
+operation_close_event = threading.Event()
 def operation_start():
+    start.configure(text="⌛️ Running...")
     thread = threading.Thread(target=operation_start_thread)
     thread.start()
+def operation_close():
+    start.configure(text="▶️ Run")
+    operation_close_event.set()
+
 def operation_start_thread():
     get_url = url_input.get('1.0',END)
     get_start_page = start_page.get()
@@ -215,7 +223,8 @@ def operation_start_thread():
     get_Output_Folder = Output_Folder.get()
     browser_status = Browser_Status.get()
     print(browser_status)
-    scrapper_loop(get_url, get_start_page, get_end_page, get_Output_Folder,browser_status,log)
+    operation_close_event.clear()
+    scrapper_loop(get_url, get_start_page, get_end_page, get_Output_Folder,browser_status,log,close_event=operation_close_event)
 def on_mousewheel(event):
     canvas.yview_scroll(int(-1 * (event.delta / 120)), "units")
 
