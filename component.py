@@ -95,37 +95,32 @@ def scrapper_loop(url, start_page_number, end_page_number, Output_Folder, browse
                 print('Running Page Number : ', page_run)
                 log.insert(END, f'Running Page Number : {str(page_run)}\n\n')
                 log.see(END)
-                if page_run==1:
+                try:
                     page.goto(url.strip().replace('query=', f'page={str(page_run)}&query='))
-                else:
-                    try:
-                        page.locator("//button[@aria-label='Next']").click()
-                    except Exception as ops:
-                        print('Next Not Found : ', ops)
-                        log.insert(END,'Next Not Found..\n')
-                        log.see(END)
-                        break
 
-                page.wait_for_url('https://www.linkedin.com/sales/search/*')
-                page.wait_for_selector("//div[@class='relative']//ol//li[@class='artdeco-list__item pl3 pv3 '][1]")
+                    page.wait_for_url('https://www.linkedin.com/sales/search/*')
+                    page.wait_for_selector("//div[@class='relative']//ol//li[@class='artdeco-list__item pl3 pv3 '][1]")
 
-                scroll = 3
-                while scroll < 26:
-                    if stop_check(close_event.is_set(), log):
-                        break  # if stop event break loop
+                    scroll = 3
+                    while scroll < 26:
+                        if stop_check(close_event.is_set(), log):
+                            break  # if stop event break loop
+                        sleep(1)
+                        try:
+                            page.wait_for_selector(f"//div[@class='relative']//ol//li[@class='artdeco-list__item pl3 pv3 '][{str(scroll)}]")
+                            scroll_e = page.locator(f"//div[@class='relative']//ol//li[@class='artdeco-list__item pl3 pv3 '][{str(scroll)}]")
+                            if scroll_e.count() > 0:
+                                scroll_e.click()
+                        except Exception as ops:
+                            print("Scroll error : ", ops)
+                        scroll += 3
                     sleep(1)
-                    try:
-                        page.wait_for_selector(f"//div[@class='relative']//ol//li[@class='artdeco-list__item pl3 pv3 '][{str(scroll)}]")
-                        scroll_e = page.locator(f"//div[@class='relative']//ol//li[@class='artdeco-list__item pl3 pv3 '][{str(scroll)}]")
-                        if scroll_e.count() > 0:
-                            scroll_e.click()
-                    except Exception as ops:
-                        print("Scroll error : ", ops)
-                    scroll += 3
-                sleep(1)
-                all_element_links = page.locator("//a[@data-view-name='search-results-lead-name']")
-                all_links = all_element_links.element_handles()
-                get_profile_list = ['https://www.linkedin.com' + str(link.get_attribute('href')) for link in all_links]
+                    all_element_links = page.locator("//a[@data-view-name='search-results-lead-name']")
+                    all_links = all_element_links.element_handles()
+                    get_profile_list = ['https://www.linkedin.com' + str(link.get_attribute('href')) for link in all_links]
+                except Exception as ops:
+                    print('Search Page navigate error:', ops)
+                    get_profile_list = 0
 
                 log.insert(END, f'No. {str(page_run)}. Page\'s all profile Link has been scrapped\n')
                 log.see(END)
