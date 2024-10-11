@@ -1,4 +1,5 @@
 /venv
+/env
 /__pycache__
 .idea
 postdb.db
@@ -18,3 +19,4 @@ Final_Pro_Version_v2.zip
 /chrome-win
 Multi_Thread.zip
 Multi_Thread_With_Browser.zip
+Threading_App.zip

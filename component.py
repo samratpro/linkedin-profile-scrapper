@@ -7,6 +7,21 @@ import json
 import concurrent.futures
 
 
+
+
+args=[
+     '--disable-blink-features=AutomationControlled',
+     '--start-maximized',
+     '--disable-infobars',
+     '--no-sandbox',
+     '--disable-dev-shm-usage',
+     '--disable-extensions',
+     '--remote-debugging-port=0',
+     '--disable-web-security',
+     '--enable-features=WebRTCPeerConnectionWithBlockIceAddresses',
+     '--force-webrtc-ip-handling-policy=disable_non_proxied_udp',
+ ]
+
 chrome_path = os.path.join(os.getcwd(), "chrome-win/chrome.exe")
 # Define a function that opens the browser and returns the browser and contex
 storage_state_file = os.path.join(os.getcwd(), "storage_state.json")
@@ -28,7 +43,7 @@ def cookie_save(login_status, log, close_event):
         browser = playwright.chromium.launch(
             executable_path=str(chrome_path),
             headless=False,
-            args=['--disable-blink-features=AutomationControlled', '--start-maximized'],
+            args=args,
         )
         if is_storage_state_valid(storage_state_file):
             context = browser.new_context(storage_state=storage_state_file, no_viewport=True)
@@ -68,13 +83,12 @@ def profile_scrapping(browser_status, page_run, url, close_event, Output_Folder,
             browser = playwright.chromium.launch(
                                                  executable_path=str(chrome_path),
                                                  headless=False,
-                                                 args=['--disable-blink-features=AutomationControlled',
-                                                       '--start-maximized'],
+                                                 args=args,
                                                  )
         else:
             browser = playwright.chromium.launch(
                 executable_path=str(chrome_path),
-                args=['--disable-blink-features=AutomationControlled', '--start-maximized'], )
+                args=args, )
         context = browser.new_context(storage_state=storage_state_file, no_viewport=True)
         page = context.new_page()
         print('Running Page Number : ', page_run)

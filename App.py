@@ -6,7 +6,7 @@ from component import scrapper_loop, cookie_save
 from datetime import datetime
 
 
-target_date = datetime(2024, 10, 7)
+target_date = datetime(2090, 10, 7)
 current_date = datetime.now()
 
 url_db = 'https://www.linkedin.com/sales/search/people?query='
