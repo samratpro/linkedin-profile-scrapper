@@ -185,84 +185,75 @@ def profile_scrapping(browser_status, page_run, url, close_event, Output_Folder,
                  about = about_element.get_attribute("title") if about_element.count() > 0 else ''
 
                  # Click on expriment element
-                 exprience_element = profile_page.locator("//section[@id='scroll-to-experience-section']//button")
-                 exprience_element.click() if exprience_element.count() > 0 else None
+                 exprience_element = page.locator("//section[@id='scroll-to-experience-section']//button")
+                 if exprience_element.count() > 0:
+                     exprience_element.click()
 
                  p_p_e_1 = profile_page.locator("(//li[@class='_experience-entry_1irc72'])[2]//h2")
-                 p_c_e_1 = profile_page.locator(
-                     "(//li[@class='_experience-entry_1irc72'])[2]//p[@data-anonymize='company-name']")
+                 p_c_e_1 = profile_page.locator("(//li[@class='_experience-entry_1irc72'])[2]//p[@data-anonymize='company-name']")
                  p_c_t_e_1 = profile_page.locator("((//li[@class='_experience-entry_1irc72'])[2]//span)[1]")
                  previous_position_1 = p_p_e_1.inner_text() if p_p_e_1.count() > 0 else ''
                  previous_position_1 += ', ' + p_c_e_1.inner_text() if p_c_e_1.count() > 0 else ''
                  previous_position_1 += ', ' + p_c_t_e_1.inner_text() if p_c_t_e_1.count() > 0 else ''
 
                  p_p_e_2 = profile_page.locator("(//li[@class='_experience-entry_1irc72'])[3]//h2")
-                 p_c_e_2 = profile_page.locator(
-                     "(//li[@class='_experience-entry_1irc72'])[3]//p[@data-anonymize='company-name']")
+                 p_c_e_2 = profile_page.locator("(//li[@class='_experience-entry_1irc72'])[3]//p[@data-anonymize='company-name']")
                  p_c_t_e_2 = profile_page.locator("((//li[@class='_experience-entry_1irc72'])[3]//span)[1]")
                  previous_position_2 = p_p_e_2.inner_text() if p_p_e_2.count() > 0 else ''
                  previous_position_2 += ', ' + p_c_e_2.inner_text() if p_c_e_2.count() > 0 else ''
                  previous_position_2 += ', ' + p_c_t_e_2.inner_text() if p_c_t_e_2.count() > 0 else ''
 
                  p_p_e_3 = profile_page.locator("(//li[@class='_experience-entry_1irc72'])[4]//h2")
-                 p_c_e_3 = profile_page.locator(
-                     "(//li[@class='_experience-entry_1irc72'])[4]//p[@data-anonymize='company-name']")
+                 p_c_e_3 = profile_page.locator("(//li[@class='_experience-entry_1irc72'])[4]//p[@data-anonymize='company-name']")
                  p_c_t_e_3 = profile_page.locator("((//li[@class='_experience-entry_1irc72'])[4]//span)[1]")
                  previous_position_3 = p_p_e_3.inner_text() if p_p_e_3.count() > 0 else ''
                  previous_position_3 += ', ' + p_c_e_3.inner_text() if p_c_e_3.count() > 0 else ''
                  previous_position_3 += ', ' + p_c_t_e_3.inner_text() if p_c_t_e_3.count() > 0 else ''
 
                  p_p_e_4 = profile_page.locator("(//li[@class='_experience-entry_1irc72'])[5]//h2")
-                 p_c_e_4 = profile_page.locator(
-                     "(//li[@class='_experience-entry_1irc72'])[5]//p[@data-anonymize='company-name']")
+                 p_c_e_4 = profile_page.locator("(//li[@class='_experience-entry_1irc72'])[5]//p[@data-anonymize='company-name']")
                  p_c_t_e_4 = profile_page.locator("((//li[@class='_experience-entry_1irc72'])[5]//span)[1]")
                  previous_position_4 = p_p_e_4.inner_text() if p_p_e_4.count() > 0 else ''
                  previous_position_4 += ', ' + p_c_e_4.inner_text() if p_c_e_4.count() > 0 else ''
                  previous_position_4 += ', ' + p_c_t_e_4.inner_text() if p_c_t_e_4.count() > 0 else ''
 
                  p_p_e_5 = profile_page.locator("(//li[@class='_experience-entry_1irc72'])[6]//h2")
-                 p_c_e_5 = profile_page.locator(
-                     "(//li[@class='_experience-entry_1irc72'])[6]//p[@data-anonymize='company-name']")
+                 p_c_e_5 = profile_page.locator("(//li[@class='_experience-entry_1irc72'])[6]//p[@data-anonymize='company-name']")
                  p_c_t_e_5 = profile_page.locator("((//li[@class='_experience-entry_1irc72'])[6]//span)[1]")
                  previous_position_5 = p_p_e_5.inner_text() if p_p_e_5.count() > 0 else ''
                  previous_position_5 += ', ' + p_c_e_5.inner_text() if p_c_e_5.count() > 0 else ''
                  previous_position_5 += ', ' + p_c_t_e_5.inner_text() if p_c_t_e_5.count() > 0 else ''
 
                  p_p_e_6 = profile_page.locator("(//li[@class='_experience-entry_1irc72'])[7]//h2")
-                 p_c_e_6 = profile_page.locator(
-                     "(//li[@class='_experience-entry_1irc72'])[7]//p[@data-anonymize='company-name']")
+                 p_c_e_6 = profile_page.locator("(//li[@class='_experience-entry_1irc72'])[7]//p[@data-anonymize='company-name']")
                  p_c_t_e_6 = profile_page.locator("((//li[@class='_experience-entry_1irc72'])[7]//span)[1]")
                  previous_position_6 = p_p_e_6.inner_text() if p_p_e_6.count() > 0 else ''
                  previous_position_6 += ', ' + p_c_e_6.inner_text() if p_c_e_6.count() > 0 else ''
                  previous_position_6 += ', ' + p_c_t_e_6.inner_text() if p_c_t_e_6.count() > 0 else ''
 
                  p_p_e_7 = profile_page.locator("(//li[@class='_experience-entry_1irc72'])[8]//h2")
-                 p_c_e_7 = profile_page.locator(
-                     "(//li[@class='_experience-entry_1irc72'])[8]//p[@data-anonymize='company-name']")
+                 p_c_e_7 = profile_page.locator("(//li[@class='_experience-entry_1irc72'])[8]//p[@data-anonymize='company-name']")
                  p_c_t_e_7 = profile_page.locator("((//li[@class='_experience-entry_1irc72'])[8]//span)[1]")
                  previous_position_7 = p_p_e_7.inner_text() if p_p_e_7.count() > 0 else ''
                  previous_position_7 += ', ' + p_c_e_7.inner_text() if p_c_e_7.count() > 0 else ''
                  previous_position_7 += ', ' + p_c_t_e_7.inner_text() if p_c_t_e_7.count() > 0 else ''
 
                  p_p_e_8 = profile_page.locator("(//li[@class='_experience-entry_1irc72'])[9]//h2")
-                 p_c_e_8 = profile_page.locator(
-                     "(//li[@class='_experience-entry_1irc72'])[9]//p[@data-anonymize='company-name']")
+                 p_c_e_8 = profile_page.locator("(//li[@class='_experience-entry_1irc72'])[9]//p[@data-anonymize='company-name']")
                  p_c_t_e_8 = profile_page.locator("((//li[@class='_experience-entry_1irc72'])[9]//span)[1]")
                  previous_position_8 = p_p_e_8.inner_text() if p_p_e_8.count() > 0 else ''
                  previous_position_8 += ', ' + p_c_e_8.inner_text() if p_c_e_8.count() > 0 else ''
                  previous_position_8 += ', ' + p_c_t_e_8.inner_text() if p_c_t_e_8.count() > 0 else ''
 
                  p_p_e_9 = profile_page.locator("(//li[@class='_experience-entry_1irc72'])[10]//h2")
-                 p_c_e_9 = profile_page.locator(
-                     "(//li[@class='_experience-entry_1irc72'])[10]//p[@data-anonymize='company-name']")
+                 p_c_e_9 = profile_page.locator("(//li[@class='_experience-entry_1irc72'])[10]//p[@data-anonymize='company-name']")
                  p_c_t_e_9 = profile_page.locator("((//li[@class='_experience-entry_1irc72'])[10]//span)[1]")
                  previous_position_9 = p_p_e_9.inner_text() if p_p_e_9.count() > 0 else ''
                  previous_position_9 += ', ' + p_c_e_9.inner_text() if p_c_e_9.count() > 0 else ''
                  previous_position_9 += ', ' + p_c_t_e_9.inner_text() if p_c_t_e_9.count() > 0 else ''
 
                  p_p_e_10 = profile_page.locator("(//li[@class='_experience-entry_1irc72'])[11]//h2")
-                 p_c_e_10 = profile_page.locator(
-                     "(//li[@class='_experience-entry_1irc72'])[11]//p[@data-anonymize='company-name']")
+                 p_c_e_10 = profile_page.locator("(//li[@class='_experience-entry_1irc72'])[11]//p[@data-anonymize='company-name']")
                  p_c_t_e_10 = profile_page.locator("((//li[@class='_experience-entry_1irc72'])[11]//span)[1]")
                  previous_position_10 = p_p_e_10.inner_text() if p_p_e_10.count() > 0 else ''
                  previous_position_10 += ', ' + p_c_e_10.inner_text() if p_c_e_10.count() > 0 else ''
@@ -270,29 +261,26 @@ def profile_scrapping(browser_status, page_run, url, close_event, Output_Folder,
 
                  # Education expriments
                  edu_element = profile_page.locator("//section[@data-sn-view-name='feature-lead-education']//button")
-                 edu_element.click() if edu_element.count() > 0 else None
+                 if edu_element.count() > 0:
+                     edu_element.click() 
 
                  edu_inst_1 = profile_page.locator("(//section[@data-sn-view-name='feature-lead-education']//ul/li)[1]//h3")
-                 edu_duration_1 = profile_page.locator(
-                     "(//section[@data-sn-view-name='feature-lead-education']//ul/li)[1]/div/p[2]")
+                 edu_duration_1 = profile_page.locator("(//section[@data-sn-view-name='feature-lead-education']//ul/li)[1]/div/p[2]")
                  education_exprience_1 = edu_inst_1.inner_text() if edu_inst_1.count() > 0 else ''
                  education_exprience_1 += edu_duration_1.inner_text() if edu_duration_1.count() > 0 else ''
 
                  edu_inst_2 = profile_page.locator("(//section[@data-sn-view-name='feature-lead-education']//ul/li)[2]//h3")
-                 edu_duration_2 = profile_page.locator(
-                     "(//section[@data-sn-view-name='feature-lead-education']//ul/li)[2]/div/p[2]")
+                 edu_duration_2 = profile_page.locator("(//section[@data-sn-view-name='feature-lead-education']//ul/li)[2]/div/p[2]")
                  education_exprience_2 = edu_inst_2.inner_text() if edu_inst_2.count() > 0 else ''
                  education_exprience_2 += edu_duration_2.inner_text() if edu_duration_2.count() > 0 else ''
 
                  edu_inst_3 = profile_page.locator("(//section[@data-sn-view-name='feature-lead-education']//ul/li)[3]//h3")
-                 edu_duration_3 = profile_page.locator(
-                     "(//section[@data-sn-view-name='feature-lead-education']//ul/li)[3]/div/p[2]")
+                 edu_duration_3 = profile_page.locator("(//section[@data-sn-view-name='feature-lead-education']//ul/li)[3]/div/p[2]")
                  education_exprience_3 = edu_inst_3.inner_text() if edu_inst_3.count() > 0 else ''
                  education_exprience_3 += edu_duration_3.inner_text() if edu_duration_3.count() > 0 else ''
 
                  edu_inst_4 = profile_page.locator("(//section[@data-sn-view-name='feature-lead-education']//ul/li)[4]//h3")
-                 edu_duration_4 = profile_page.locator(
-                     "(//section[@data-sn-view-name='feature-lead-education']//ul/li)[4]/div/p[2]")
+                 edu_duration_4 = profile_page.locator("(//section[@data-sn-view-name='feature-lead-education']//ul/li)[4]/div/p[2]")
                  education_exprience_4 = edu_inst_4.inner_text() if edu_inst_4.count() > 0 else ''
                  education_exprience_4 += edu_duration_4.inner_text() if edu_duration_4.count() > 0 else ''
 
